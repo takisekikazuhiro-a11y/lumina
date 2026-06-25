@@ -1680,3 +1680,169 @@ img {
     display: flex;
   }
 }
+
+/* ===========================
+   Page Intro Curtain
+   =========================== */
+#page-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.intro-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #0066FF;
+  transition: transform 0.9s cubic-bezier(.76,0,.24,1);
+  will-change: transform;
+}
+
+#intro-top    { top: 0; }
+#intro-bottom { bottom: 0; }
+
+#intro-top.exit    { transform: translateY(-100%); }
+#intro-bottom.exit { transform: translateY(100%); }
+
+.intro-brand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  animation: introLogoIn 0.55s cubic-bezier(.22,1,.36,1) 0.15s forwards;
+}
+
+.intro-brand-icon {
+  width: 52px;
+  height: 52px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.intro-brand-name {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+@keyframes introLogoIn {
+  from { opacity: 0; transform: translate(-50%, -42%) scale(0.88); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes introLogoOut {
+  to   { opacity: 0; transform: translate(-50%, -58%) scale(1.05); }
+}
+
+/* ===========================
+   Scroll Progress Bar
+   =========================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #0066FF;
+  z-index: 300;
+  width: 0%;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* ===========================
+   Full-Viewport Section Wipe
+   =========================== */
+.section-wipe-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  transform: translateX(101%);
+  will-change: transform;
+}
+
+@keyframes sectionWipeSweep {
+  0%   { transform: translateX(101%); }
+  38%  { transform: translateX(0%); }
+  62%  { transform: translateX(0%); }
+  100% { transform: translateX(-101%); }
+}
+
+.section-wipe-overlay.active {
+  animation: sectionWipeSweep 1s cubic-bezier(.76,0,.24,1) forwards;
+}
+
+/* ===========================
+   Image Wipe Panels
+   =========================== */
+.wipe-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Hero: sweeps IN from left, pauses, exits right */
+.wipe-dark { background: #1A1A1B; }
+.wipe-blue { background: #0066FF; }
+
+@keyframes heroWipeSweep {
+  0%   { transform: translateX(-101%); }
+  42%  { transform: translateX(0%); }
+  58%  { transform: translateX(0%); }
+  100% { transform: translateX(101%); }
+}
+
+#hero-image-wrap .wipe-panel {
+  transform: translateX(-101%);
+}
+
+#hero-image-wrap.wipe-active .wipe-panel {
+  animation: heroWipeSweep 0.9s cubic-bezier(.76,0,.24,1) forwards;
+}
+
+#hero-image-wrap img {
+  opacity: 0;
+  transition: opacity 0.01s 0.5s; /* reveal when panel is over image */
+}
+
+#hero-image-wrap.wipe-active img {
+  opacity: 1;
+}
+
+#hero-image-wrap.wipe-done {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Scroll-triggered images: panel covers from start, exits right */
+.scroll-wipe .wipe-panel {
+  transform: translateX(0%); /* starts covering the image */
+}
+
+@keyframes scrollWipeExit {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(101%); }
+}
+
+.scroll-wipe.wipe-active .wipe-panel {
+  animation: scrollWipeExit 0.8s cubic-bezier(.76,0,.24,1) forwards;
+}
+
+/* Remove data-reveal from insight-image (wipe handles it) */
+.scroll-wipe[data-reveal],
+.scroll-wipe[data-reveal="right"] {
+  opacity: 1;
+  transform: none;
+}

@@ -11,6 +11,22 @@
 </head>
 <body>
 
+  <!-- Page intro curtain -->
+  <div id="page-intro">
+    <div class="intro-panel" id="intro-top"></div>
+    <div class="intro-panel" id="intro-bottom"></div>
+    <div class="intro-brand">
+      <div class="intro-brand-icon"></div>
+      <span class="intro-brand-name">Lumina</span>
+    </div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Full-viewport section wipe overlay -->
+  <div class="section-wipe-overlay" id="section-wipe"></div>
+
   <!-- Navbar -->
   <header class="navbar" id="navbar">
     <div class="navbar-inner">
@@ -64,7 +80,8 @@
         <a href="#" class="btn btn-secondary ripple">デモを予約する</a>
       </div>
     </div>
-    <div class="hero-image hero-anim" style="--hero-delay:0.45s">
+    <div class="hero-image" id="hero-image-wrap">
+      <div class="wipe-panel wipe-dark"></div>
       <img src="images/hero-main.png" alt="Lumina ダッシュボード">
     </div>
   </section>
@@ -94,7 +111,7 @@
   </section>
 
   <!-- Features -->
-  <div class="features-bg">
+  <div class="features-bg" data-flash-color="#1A1A1B">
     <section class="features-section">
       <div class="section-header" data-reveal>
         <span class="section-badge">FEATURES</span>
@@ -161,14 +178,16 @@
         </ul>
         <a href="#" class="btn btn-outline ripple">詳しく見る</a>
       </div>
-      <div class="insight-image" data-reveal="right">
+      <div class="insight-image scroll-wipe" id="insight-image-wrap">
+        <div class="wipe-panel wipe-blue"></div>
         <img src="images/insight-image.png" alt="データ分析ダッシュボード">
       </div>
     </div>
   </section>
 
   <!-- Full-width Image (parallax) -->
-  <div class="fullwidth-image" id="parallax-section">
+  <div class="fullwidth-image scroll-wipe" id="parallax-section">
+    <div class="wipe-panel wipe-dark"></div>
     <img src="images/fullwidth-image.png" alt="" id="parallax-img">
   </div>
 
@@ -224,7 +243,7 @@
   </section>
 
   <!-- Pricing -->
-  <div class="pricing-bg">
+  <div class="pricing-bg" data-flash-color="#0066FF">
     <section class="pricing-section">
       <div class="section-header" data-reveal>
         <span class="section-badge">PRICING</span>

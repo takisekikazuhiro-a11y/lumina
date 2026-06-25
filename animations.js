@@ -4,6 +4,138 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ========================================
+     PAGE INTRO: blue screen splits open
+     ======================================== */
+  const introEl    = document.getElementById('page-intro');
+  const introTop   = document.getElementById('intro-top');
+  const introBot   = document.getElementById('intro-bottom');
+  const introBrand = introEl?.querySelector('.intro-brand');
+
+  // Pause hero text until intro exits
+  const heroAnims = document.querySelectorAll('.hero-anim');
+  heroAnims.forEach(el => {
+    el.style.animationPlayState = 'paused';
+    el.style.animationDelay = '0s';
+  });
+
+  if (introEl) {
+    setTimeout(() => {
+      // Logo fades out before panels split
+      if (introBrand) {
+        introBrand.style.animation = 'introLogoOut 0.25s ease forwards';
+      }
+      setTimeout(() => {
+        // Panels split apart
+        introTop.classList.add('exit');
+        introBot.classList.add('exit');
+
+        // Resume hero text animations with stagger
+        heroAnims.forEach((el, i) => {
+          el.style.animationDelay = `${i * 0.1}s`;
+          el.style.animationPlayState = 'running';
+        });
+
+        // Trigger hero image wipe (slight delay after split starts)
+        setTimeout(() => {
+          const heroWrap = document.getElementById('hero-image-wrap');
+          if (heroWrap) triggerHeroWipe(heroWrap);
+        }, 150);
+
+        // Remove intro from DOM after panels have exited
+        setTimeout(() => introEl.remove(), 1000);
+      }, 200);
+    }, 950);
+  } else {
+    // No intro: play hero animations immediately
+    heroAnims.forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.1}s`;
+      el.style.animationPlayState = 'running';
+    });
+  }
+
+
+  /* ========================================
+     HERO IMAGE WIPE (load-triggered)
+     ======================================== */
+  const triggerHeroWipe = (container) => {
+    if (container.classList.contains('wipe-done')) return;
+    container.classList.add('wipe-active');
+    const panel = container.querySelector('.wipe-panel');
+    panel?.addEventListener('animationend', () => {
+      container.classList.remove('wipe-active');
+      container.classList.add('wipe-done');
+    }, { once: true });
+  };
+
+
+  /* ========================================
+     SCROLL IMAGE WIPE (scroll-triggered)
+     ======================================== */
+  const triggerScrollWipe = (container) => {
+    if (container.classList.contains('wipe-done')) return;
+    container.classList.add('wipe-active');
+    const panel = container.querySelector('.wipe-panel');
+    panel?.addEventListener('animationend', () => {
+      container.classList.remove('wipe-active');
+      container.classList.add('wipe-done');
+    }, { once: true });
+  };
+
+  const imageWipeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        triggerScrollWipe(entry.target);
+        imageWipeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('.scroll-wipe').forEach(el => imageWipeObserver.observe(el));
+
+
+  /* ========================================
+     FULL-VIEWPORT SECTION WIPE
+     ======================================== */
+  const sectionWipeEl = document.getElementById('section-wipe');
+  let sectionWipeLocked = false;
+
+  const triggerSectionWipe = (color) => {
+    if (sectionWipeLocked || !sectionWipeEl) return;
+    sectionWipeLocked = true;
+    sectionWipeEl.style.background = color;
+    sectionWipeEl.classList.add('active');
+    sectionWipeEl.addEventListener('animationend', () => {
+      sectionWipeEl.classList.remove('active');
+      sectionWipeEl.style.transform = 'translateX(101%)';
+      setTimeout(() => { sectionWipeLocked = false; }, 200);
+    }, { once: true });
+  };
+
+  const sectionFlashObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        triggerSectionWipe(entry.target.dataset.flashColor || '#1A1A1B');
+        sectionFlashObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('[data-flash-color]').forEach(el => sectionFlashObserver.observe(el));
+
+
+  /* ========================================
+     SCROLL PROGRESS BAR
+     ======================================== */
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    if (!progressBar) return;
+    const scrolled = document.documentElement.scrollTop;
+    const total    = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = `${(scrolled / total) * 100}%`;
+  }, { passive: true });
+
+
   /* ---- Split hero title into words ---- */
   const heroTitle = document.querySelector('.hero-title');
   if (heroTitle) {
