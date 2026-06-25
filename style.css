@@ -1509,3 +1509,174 @@ img {
   .insight-title { font-size: 24px; }
   .price { font-size: 32px; }
 }
+
+/* ===========================
+   Marquee (logos)
+   =========================== */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.marquee-inner {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-track:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+/* ===========================
+   Split word hero animation
+   =========================== */
+.hero-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* ===========================
+   Text clip-mask reveal
+   =========================== */
+.clip-reveal {
+  overflow: hidden;
+  display: block;
+}
+
+.clip-reveal-inner {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 0.8s cubic-bezier(.22,1,.36,1);
+}
+
+.clip-reveal.is-visible .clip-reveal-inner {
+  transform: translateY(0);
+}
+
+/* ===========================
+   Feature card number
+   =========================== */
+.feature-num {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: #CBD5E1;
+  align-self: flex-start;
+}
+
+.feature-card:hover .feature-num {
+  color: #0066FF;
+  transition: color 0.3s;
+}
+
+/* ===========================
+   Testimonials carousel
+   =========================== */
+.carousel-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.carousel-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+}
+
+/* Single-slide mode (mobile) */
+.carousel-track.single-mode {
+  grid-template-columns: 1fr;
+}
+
+.carousel-track.single-mode .testimonial-card {
+  display: none;
+}
+
+.carousel-track.single-mode .testimonial-card.is-active {
+  display: flex;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.carousel-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748B;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.carousel-btn:hover {
+  background: #0066FF;
+  border-color: #0066FF;
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E2E8F0;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.is-active {
+  background: #0066FF;
+  transform: scale(1.3);
+}
+
+/* Hide controls in desktop 3-up view */
+@media (min-width: 769px) {
+  .carousel-controls { display: none; }
+}
+
+/* Mobile: show one card at a time */
+@media (max-width: 768px) {
+  .carousel-track {
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .testimonial-card {
+    display: none;
+  }
+
+  .testimonial-card.is-active {
+    display: flex;
+  }
+}

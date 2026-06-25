@@ -4,6 +4,97 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ---- Split hero title into words ---- */
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const html = heroTitle.innerHTML;
+    const parts = html.split(/(<br\s*\/?>)/gi);
+    heroTitle.innerHTML = parts.map(part => {
+      if (/^<br/i.test(part)) return part;
+      return part.split(/\s+/).filter(Boolean).map((word, i) => {
+        const baseDelay = 0.15;
+        return `<span class="word" style="animation-delay:${(baseDelay + i * 0.08).toFixed(2)}s">${word}</span>`;
+      }).join(' ');
+    }).join('');
+  }
+
+
+  /* ---- Clip-mask reveal for section titles ---- */
+  document.querySelectorAll('.section-title, .insight-title, .cta-title').forEach(el => {
+    const text = el.innerHTML;
+    el.classList.add('clip-reveal');
+    el.innerHTML = `<span class="clip-reveal-inner">${text}</span>`;
+  });
+
+  const clipObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        clipObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.clip-reveal').forEach(el => clipObserver.observe(el));
+
+
+  /* ---- Testimonials carousel (mobile) ---- */
+  const track = document.getElementById('carousel-track');
+  const dotsContainer = document.getElementById('carousel-dots');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+
+  if (track) {
+    const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+    let current = 0;
+    let isMobile = window.innerWidth <= 768;
+
+    const buildDots = () => {
+      dotsContainer.innerHTML = '';
+      cards.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === current ? ' is-active' : '');
+        dot.setAttribute('aria-label', `${i + 1}枚目`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      });
+    };
+
+    const goTo = (index) => {
+      current = (index + cards.length) % cards.length;
+      if (isMobile) {
+        cards.forEach((c, i) => c.classList.toggle('is-active', i === current));
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('is-active', i === current);
+        });
+      }
+    };
+
+    const applyMode = () => {
+      isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        cards.forEach((c, i) => c.classList.toggle('is-active', i === current));
+      } else {
+        cards.forEach(c => {
+          c.classList.remove('is-active');
+          c.style.display = '';
+        });
+      }
+    };
+
+    buildDots();
+    applyMode();
+
+    prevBtn?.addEventListener('click', () => goTo(current - 1));
+    nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+    window.addEventListener('resize', applyMode, { passive: true });
+
+    // Auto-advance on mobile
+    setInterval(() => { if (isMobile) goTo(current + 1); }, 5000);
+  }
+
+
   /* ---- Navbar: shadow on scroll ---- */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

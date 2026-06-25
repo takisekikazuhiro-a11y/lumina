@@ -69,15 +69,27 @@
     </div>
   </section>
 
-  <!-- Logos -->
+  <!-- Logos (marquee) -->
   <section class="logos-section">
     <p class="logos-label" data-reveal>信頼される 500 社以上の企業に導入されています</p>
-    <div class="logos-row" data-stagger>
-      <span class="logo-company">TECHNO</span>
-      <span class="logo-company">MIRAIS</span>
-      <span class="logo-company">CORE</span>
-      <span class="logo-company">SYNERGY</span>
-      <span class="logo-company">VENTURE</span>
+    <div class="marquee-track">
+      <div class="marquee-inner">
+        <span class="logo-company">TECHNO</span>
+        <span class="logo-company">MIRAIS</span>
+        <span class="logo-company">CORE</span>
+        <span class="logo-company">SYNERGY</span>
+        <span class="logo-company">VENTURE</span>
+        <span class="logo-company">NEXUS</span>
+        <span class="logo-company">PRISM</span>
+        <!-- duplicate for seamless loop -->
+        <span class="logo-company">TECHNO</span>
+        <span class="logo-company">MIRAIS</span>
+        <span class="logo-company">CORE</span>
+        <span class="logo-company">SYNERGY</span>
+        <span class="logo-company">VENTURE</span>
+        <span class="logo-company">NEXUS</span>
+        <span class="logo-company">PRISM</span>
+      </div>
     </div>
   </section>
 
@@ -91,6 +103,7 @@
       </div>
       <div class="features-grid" data-stagger>
         <div class="feature-card">
+          <span class="feature-num">01</span>
           <div class="feature-icon">
             <img src="images/icon-refresh.svg" alt="">
           </div>
@@ -100,6 +113,7 @@
           </div>
         </div>
         <div class="feature-card">
+          <span class="feature-num">02</span>
           <div class="feature-icon">
             <img src="images/icon-users.svg" alt="">
           </div>
@@ -109,6 +123,7 @@
           </div>
         </div>
         <div class="feature-card">
+          <span class="feature-num">03</span>
           <div class="feature-icon">
             <img src="images/icon-barchart.svg" alt="">
           </div>
@@ -157,42 +172,53 @@
     <img src="images/fullwidth-image.png" alt="" id="parallax-img">
   </div>
 
-  <!-- Testimonials -->
+  <!-- Testimonials (carousel) -->
   <section class="testimonials-section">
     <div class="section-header" data-reveal>
       <span class="section-badge">TESTIMONIALS</span>
       <h2 class="section-title">ユーザーの声</h2>
     </div>
-    <div class="testimonials-grid" data-stagger>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"導入後、チーム内のコミュニケーションコストが劇的に下がりました。UIも美しく、毎日使うのが楽しみです。"</p>
-        <div class="testimonial-author">
-          <img src="images/avatar-sato.png" alt="佐藤 健二" class="avatar">
-          <div>
-            <p class="author-name">佐藤 健二</p>
-            <p class="author-role">プロダクトマネージャー</p>
+    <div class="carousel-wrapper" data-reveal>
+      <div class="carousel-track" id="carousel-track">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"導入後、チーム内のコミュニケーションコストが劇的に下がりました。UIも美しく、毎日使うのが楽しみです。"</p>
+          <div class="testimonial-author">
+            <img src="images/avatar-sato.png" alt="佐藤 健二" class="avatar">
+            <div>
+              <p class="author-name">佐藤 健二</p>
+              <p class="author-role">プロダクトマネージャー</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"小規模なチームでも使いやすく、スケールに合わせて機能を選択できるのが魅力です。サポートも非常に迅速でした。"</p>
+          <div class="testimonial-author">
+            <img src="images/avatar-tanaka.png" alt="田中 美咲" class="avatar">
+            <div>
+              <p class="author-name">田中 美咲</p>
+              <p class="author-role">スタートアップCEO</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"日本の商習慣に合わせた設計がされており、社内への浸透が非常にスムーズでした。これこそ求めていたツールです。"</p>
+          <div class="testimonial-author">
+            <img src="images/avatar-takahashi.png" alt="高橋 浩" class="avatar">
+            <div>
+              <p class="author-name">高橋 浩</p>
+              <p class="author-role">DX推進室長</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"小規模なチームでも使いやすく、スケールに合わせて機能を選択できるのが魅力です。サポートも非常に迅速でした。"</p>
-        <div class="testimonial-author">
-          <img src="images/avatar-tanaka.png" alt="田中 美咲" class="avatar">
-          <div>
-            <p class="author-name">田中 美咲</p>
-            <p class="author-role">スタートアップCEO</p>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"日本の商習慣に合わせた設計がされており、社内への浸透が非常にスムーズでした。これこそ求めていたツールです。"</p>
-        <div class="testimonial-author">
-          <img src="images/avatar-takahashi.png" alt="高橋 浩" class="avatar">
-          <div>
-            <p class="author-name">高橋 浩</p>
-            <p class="author-role">DX推進室長</p>
-          </div>
-        </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carousel-prev" aria-label="前へ">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 5L7.5 10L12.5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <button class="carousel-btn" id="carousel-next" aria-label="次へ">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </section>
