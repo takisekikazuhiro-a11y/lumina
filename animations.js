@@ -193,6 +193,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  /* ---- Mobile hamburger menu ---- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileOverlay = document.getElementById('mobile-overlay');
+
+  const toggleMenu = (open) => {
+    hamburger.classList.toggle('is-open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    mobileNav.classList.toggle('is-open', open);
+    mobileOverlay.classList.toggle('is-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  hamburger.addEventListener('click', () => {
+    toggleMenu(!hamburger.classList.contains('is-open'));
+  });
+
+  mobileOverlay.addEventListener('click', () => toggleMenu(false));
+
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => toggleMenu(false));
+  });
+
   /* ---- Testimonial card quote highlight ---- */
   document.querySelectorAll('.testimonial-card').forEach(card => {
     const text = card.querySelector('.testimonial-text');
